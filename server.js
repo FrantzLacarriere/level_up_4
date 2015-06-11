@@ -1,19 +1,9 @@
 var express = require('express');
 var app = express();
 
-app.use(function(req, res, next){
-  var language = req.params.language;
-  console.log(req.params);
-  if(language === "javascript"){
-    res.send("Bleck");
-  } else {
-    next();
-  }
-});
-app.get('/', function(req, res) {
-  res.send("OMG IT WORKED!");
-});
+var languages = ["Ruby", "Javascript", "Elixir"];
 
+app.use(express.static("public"));
 app.get('/greet/:name', function(req, res){
   var name = req.params.name;
   res.send("Hello, " + name);
@@ -23,6 +13,10 @@ app.get('/languages/:language', function(req, res){
   var language = req.params.language;
   res.send(language + ", that language is great!");
 });
+
+app.get('/languages', function(req, res){
+  res.json(languages);
+})
 
 app.listen(3000, function(){
   console.log("Running server on port 3000");
